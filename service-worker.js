@@ -1,4 +1,4 @@
-const CACHE_NAME = "p2p-calculadora-v6";
+const CACHE_NAME = "p2p-calculadora-v7";
 
 const urlsToCache = [
   "./",
