@@ -1,370 +1,771 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
 
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#000000">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora P2P</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora P2P</title>
 
-<style>
-:root {
-    --bg: #0B0E11;
-    --card: #181A20;
-    --input: #2B3139;
-    --text: #EAECEF;
-    --subtext: #848E9C;
-    --accent: #FCD535;
-    --green: #0ECB81;
-    --red: #F6465D;
-}
+    <style>
+        :root {
+            --bg: #0B0E11;
+            --card: #181A20;
+            --input: #2B3139;
+            --text: #EAECEF;
+            --subtext: #848E9C;
+            --accent: #FCD535;
+            --green: #0ECB81;
+            --red: #F6465D;
+        }
 
-.light {
-    --bg: #f4f6f9;
-    --card: #ffffff;
-    --input: #eef1f4;
-    --text: #1e2329;
-    --subtext: #707a8a;
-    --accent: #f0b90b;
-    --green: #0ECB81;
-    --red: #F6465D;
-}
+        .light {
+            --bg: #f4f6f9;
+            --card: #ffffff;
+            --input: #eef1f4;
+            --text: #1e2329;
+            --subtext: #707a8a;
+            --accent: #f0b90b;
+            --green: #0ECB81;
+            --red: #F6465D;
+        }
 
-* {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-}
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+        }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 30px 0;
-    transition: 0.25s ease;
-}
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 10px 0;
+            transition: 0.25s ease;
+        }
 
-/* CONTENEDOR */
-.wrapper {
-    width: 100%;
-    max-width: 480px;
-    padding: 18px;
-}
+        /* CONTENEDOR */
+        .wrapper {
+            width: 100%;
+            max-width: 480px;
+            padding: 8px;
+        }
 
-/* CARD PREMIUM */
-.card {
-    background: var(--card);
-    padding: 26px 22px;
-    border-radius: 12px;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-    transition: 0.25s ease;
-}
+        /* CARD PREMIUM */
+        .card {
+            background: var(--card);
+            padding: 18px 16px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            transition: 0.25s ease;
+        }
 
-/* THEME */
-.theme-toggle {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    cursor: pointer;
-    font-size: 18px;
-}
+        /* THEME */
+        .theme-toggle {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            cursor: pointer;
+            font-size: 18px;
+        }
 
-/* TITULOS */
-.title {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
+        /* TITULOS */
+        .title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
 
-.subtitle {
-    margin: 6px 0 22px 0;
-    font-size: 13px;
-    color: var(--subtext);
-}
+        .subtitle {
+            margin: 2px 0 14px 0;
+            font-size: 12px;
+            color: var(--subtext);
+        }
 
-/* SWITCH MODOS */
-.mode-switch {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 22px;
-}
+        /* SWITCH MODOS */
+        .mode-switch {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
 
-.mode-btn {
-    flex: 1;
-    padding: 12px 8px;
-    border-radius: 12px;
-    border: 1px solid var(--input);
-    background: var(--input);
-    cursor: pointer;
-    font-size: 13px;
-    text-align: center;
-    transition: 0.2s ease;
-}
+        .mode-btn {
+            flex: 1;
+            padding: 9px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--input);
+            background: var(--input);
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            transition: 0.2s ease;
+            color: var(--text);
+        }
 
-.mode-btn.active {
-    /* background: var(--accent); */
-    color: var(--accent);
-    border-color: var(--accent);
-    font-weight: 600;
-}
+        .mode-btn.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
 
-/* CAMPOS */
-.field {
-    margin-bottom: 20px;
-}
+        /* CAMPOS */
+        .field {
+            margin-bottom: 12px;
+        }
 
-label {
-    font-size: 13px;
-    color: var(--subtext);
-    display: block;
-    margin-bottom: 8px;
-}
+        label {
+            font-size: 12px;
+            color: var(--subtext);
+            display: block;
+            margin-bottom: 5px;
+        }
 
-/* INPUTS PREMIUM */
-.input-group {
-    position: relative;
-}
+        /* INPUTS PREMIUM */
+        .input-group {
+            position: relative;
+        }
 
-.prefix {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 15px;
-    color: var(--subtext);
-}
+        .prefix {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: var(--subtext);
+        }
 
-input {
-    width: 100%;
-    height: 56px;
-    padding: 0 16px 0 46px;
-    background: var(--input);
-    border-radius: 12px;
-    border: 1px solid transparent;
-    color: var(--text);
-    font-size: 16px;
-    transition: 0.2s ease;
-}
+        input[type="number"] {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px 0 40px;
+            background: var(--input);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            color: var(--text);
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
 
-input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(240,185,11,0.25);
-}
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
 
-/* RESULTADO PREMIUM */
-.result-card {
-    background: linear-gradient(145deg, var(--input), rgba(255,255,255,0.02));
-    padding: 22px;
-    border-radius: 12px;
-    margin-top: 25px;
-    font-size: 15px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
-                0 15px 35px rgba(0,0,0,0.25);
-    transition: 0.25s ease;
-}
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(240, 185, 11, 0.25);
+        }
 
-.result-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
+        /* ── TOGGLE DE COMISIÓN ── */
+        .fee-section {
+            margin-bottom: 12px;
+        }
 
-.result-row:last-child {
-    margin-bottom: 0;
-    font-size: 18px;
-    font-weight: 600;
-}
+        .fee-section>label {
+            margin-bottom: 8px;
+        }
 
-.green { color: var(--green); }
-.red { color: var(--red); }
+        .fee-row {
+            display: flex;
+            gap: 8px;
+        }
 
-.hidden { display: none; }
+        .fee-leg {
+            flex: 1;
+            background: var(--input);
+            border-radius: 10px;
+            padding: 10px 10px;
+        }
 
-/* MOBILE EXTRA */
-@media (max-width: 420px) {
-    .title {
-        font-size: 21px;
-    }
+        .fee-leg-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+            margin-bottom: 6px;
+        }
 
-    input {
-        font-size: 15px;
-    }
-}
+        .fee-toggle {
+            display: flex;
+            background: var(--bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            width: 100%;
+        }
 
-</style>
+        .fee-toggle-btn {
+            flex: 1;
+            padding: 6px 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--subtext);
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .fee-toggle-btn.active {
+            background: var(--accent);
+            color: #1e2329;
+            font-weight: 600;
+        }
+
+        .fee-detail {
+            margin-top: 6px;
+            overflow: hidden;
+            transition: max-height 0.25s ease, opacity 0.25s ease;
+        }
+
+        .fee-detail.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .fee-detail:not(.collapsed) {
+            max-height: 50px;
+            opacity: 1;
+        }
+
+        .fee-detail .input-group input[type="number"] {
+            height: 34px;
+            font-size: 13px;
+            padding-left: 32px;
+        }
+
+        .fee-detail .input-group .prefix {
+            left: 10px;
+            font-size: 12px;
+        }
+
+        /* RESULTADO PREMIUM */
+        .result-card {
+            background: linear-gradient(145deg, var(--input), rgba(255, 255, 255, 0.02));
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 14px;
+            font-size: 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 15px 35px rgba(0, 0, 0, 0.25);
+            transition: 0.25s ease;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        .result-row:last-child {
+            margin-bottom: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .result-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin: 8px 0;
+        }
+
+        .light .result-divider {
+            border-top-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .result-section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--subtext);
+            margin-bottom: 8px;
+        }
+
+        .result-row .detail {
+            font-size: 12px;
+            color: var(--subtext);
+        }
+
+        .green {
+            color: var(--green);
+        }
+
+        .red {
+            color: var(--red);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* PANTALLAS CORTAS (notebook / celulares landscape) */
+        @media (max-height: 750px) {
+            body {
+                padding: 4px 0;
+            }
+
+            .wrapper {
+                padding: 4px;
+            }
+
+            .card {
+                padding: 12px 14px;
+            }
+
+            .subtitle {
+                margin: 2px 0 8px 0;
+            }
+
+            .mode-switch {
+                margin-bottom: 10px;
+                gap: 6px;
+            }
+
+            .mode-btn {
+                padding: 7px 4px;
+                font-size: 11px;
+            }
+
+            .field {
+                margin-bottom: 8px;
+            }
+
+            label {
+                margin-bottom: 3px;
+                font-size: 11px;
+            }
+
+            input[type="number"] {
+                height: 38px;
+                font-size: 14px;
+            }
+
+            .fee-section {
+                margin-bottom: 8px;
+            }
+
+            .fee-leg {
+                padding: 8px 12px;
+                margin-bottom: 6px;
+            }
+
+            .fee-detail .input-group input[type="number"] {
+                height: 34px;
+            }
+
+            .result-card {
+                padding: 12px;
+                margin-top: 10px;
+                font-size: 13px;
+            }
+
+            .result-row {
+                margin-bottom: 5px;
+            }
+
+            .result-row:last-child {
+                font-size: 15px;
+            }
+
+            .result-divider {
+                margin: 6px 0;
+            }
+        }
+
+        /* MOBILE ANGOSTO */
+        @media (max-width: 420px) {
+            .title {
+                font-size: 18px;
+            }
+
+            input {
+                font-size: 14px;
+            }
+
+            .fee-toggle-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="wrapper">
-<div class="card">
-    <div class="theme-toggle" id="toggleTheme">🌙</div>
-    <h1 class="title">Calculadora P2P</h1>
-    <p class="subtitle">USDT / ARS</p>
+    <div class="wrapper">
+        <div class="card">
+            <div class="theme-toggle" id="toggleTheme">🌙</div>
+            <h1 class="title">Calculadora P2P</h1>
+            <p class="subtitle">USDT / ARS</p>
 
-<div class="mode-switch">
-    <div class="mode-btn active" id="modeCompra">Compra</div>
-    <div class="mode-btn" id="modeVentaMercado">Venta Mercado</div>
-    <div class="mode-btn" id="modeReal">% Real</div>
-</div>
+            <div class="mode-switch">
+                <div class="mode-btn active" id="modeCompra">Compra</div>
+                <div class="mode-btn" id="modeVentaMercado">Venta Mercado</div>
+                <div class="mode-btn" id="modeReal">% Real</div>
+            </div>
 
-<div class="field" id="fieldCompra">
-    <label>Precio de compra</label>
-    <div class="input-group">
-        <span class="prefix">$</span>
-        <input type="number" id="compra" inputmode="decimal">
+            <div class="field" id="fieldCompra">
+                <label>Precio de compra</label>
+                <div class="input-group">
+                    <span class="prefix">$</span>
+                    <input type="number" id="compra" inputmode="decimal">
+                </div>
+            </div>
+
+            <div class="field hidden" id="fieldVentaMercado">
+                <label>Precio venta mercado</label>
+                <div class="input-group">
+                    <span class="prefix">$</span>
+                    <input type="number" id="ventaMercado" inputmode="decimal">
+                </div>
+            </div>
+
+            <div class="field hidden" id="fieldVentaReal">
+                <label>Precio de venta</label>
+                <div class="input-group">
+                    <span class="prefix">$</span>
+                    <input type="number" id="ventaReal" inputmode="decimal">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Capital (USDT)</label>
+                <div class="input-group">
+                    <span class="prefix">₮</span>
+                    <input type="number" id="capital" value="1000" inputmode="decimal">
+                </div>
+            </div>
+
+            <!-- ── SECCIÓN DE COMISIONES ── -->
+            <div class="fee-section">
+                <label>Comisiones por operación</label>
+                <div class="fee-row">
+                    <!-- Compra -->
+                    <div class="fee-leg">
+                        <span class="fee-leg-label">🟢 Compra</span>
+                        <div class="fee-toggle" id="toggleFeeCompra">
+                            <div class="fee-toggle-btn active" data-type="pct">%</div>
+                            <div class="fee-toggle-btn" data-type="fija">Fija</div>
+                        </div>
+                        <div class="fee-detail" id="detailCompraPct">
+                            <div class="input-group">
+                                <span class="prefix">%</span>
+                                <input type="number" id="comisionCompraPct" value="0.2" inputmode="decimal">
+                            </div>
+                        </div>
+                        <div class="fee-detail collapsed" id="detailCompraFija">
+                            <div class="input-group">
+                                <span class="prefix">₮</span>
+                                <input type="number" id="comisionCompraFija" value="0.07" inputmode="decimal"
+                                    step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Venta -->
+                    <div class="fee-leg">
+                        <span class="fee-leg-label">🔴 Venta</span>
+                        <div class="fee-toggle" id="toggleFeeVenta">
+                            <div class="fee-toggle-btn active" data-type="pct">%</div>
+                            <div class="fee-toggle-btn" data-type="fija">Fija</div>
+                        </div>
+                        <div class="fee-detail" id="detailVentaPct">
+                            <div class="input-group">
+                                <span class="prefix">%</span>
+                                <input type="number" id="comisionVentaPct" value="0.2" inputmode="decimal">
+                            </div>
+                        </div>
+                        <div class="fee-detail collapsed" id="detailVentaFija">
+                            <div class="input-group">
+                                <span class="prefix">₮</span>
+                                <input type="number" id="comisionVentaFija" value="0.07" inputmode="decimal"
+                                    step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field" id="fieldGanancia">
+                <label>Ganancia deseada (%)</label>
+                <div class="input-group">
+                    <span class="prefix">%</span>
+                    <input type="number" id="ganancia" inputmode="decimal">
+                </div>
+            </div>
+
+            <div class="result-card" id="resultado"></div>
+
+        </div>
     </div>
-</div>
 
-<div class="field hidden" id="fieldVentaMercado">
-    <label>Precio venta mercado</label>
-    <div class="input-group">
-        <span class="prefix">$</span>
-        <input type="number" id="ventaMercado" inputmode="decimal">
-    </div>
-</div>
+    <script>
+        let modo = "compra";
+        let feeCompraType = "pct";   // "pct" o "fija"
+        let feeVentaType = "pct";
 
-<div class="field hidden" id="fieldVentaReal">
-    <label>Precio de venta</label>
-    <div class="input-group">
-        <span class="prefix">$</span>
-        <input type="number" id="ventaReal" inputmode="decimal">
-    </div>
-</div>
+        // ── Elementos ──
+        const compra = document.getElementById("compra");
+        const ventaMercado = document.getElementById("ventaMercado");
+        const ventaReal = document.getElementById("ventaReal");
+        const ganancia = document.getElementById("ganancia");
+        const resultado = document.getElementById("resultado");
+        const toggleTheme = document.getElementById("toggleTheme");
 
-<div class="field">
-    <label>Comisión (%)</label>
-    <div class="input-group">
-        <span class="prefix">%</span>
-        <input type="number" id="comision" value="0.4" inputmode="decimal">
-    </div>
-</div>
+        const fieldCompra = document.getElementById("fieldCompra");
+        const fieldVentaMercado = document.getElementById("fieldVentaMercado");
+        const fieldVentaReal = document.getElementById("fieldVentaReal");
+        const fieldGanancia = document.getElementById("fieldGanancia");
 
-<div class="field" id="fieldGanancia">
-    <label>Ganancia deseada (%)</label>
-    <div class="input-group">
-        <span class="prefix">%</span>
-        <input type="number" id="ganancia" inputmode="decimal">
-    </div>
-</div>
+        // Campos de comisiones
+        const comisionCompraPct = document.getElementById("comisionCompraPct");
+        const comisionCompraFija = document.getElementById("comisionCompraFija");
+        const comisionVentaPct = document.getElementById("comisionVentaPct");
+        const comisionVentaFija = document.getElementById("comisionVentaFija");
 
-<div class="result-card" id="resultado"></div>
+        // ── Toggle de comisiones ──
+        function setupFeeToggle(toggleId, detailPctId, detailFijaId, onSwitch) {
+            const toggle = document.getElementById(toggleId);
+            const detailPct = document.getElementById(detailPctId);
+            const detailFija = document.getElementById(detailFijaId);
+            const btns = toggle.querySelectorAll(".fee-toggle-btn");
 
-</div>
-</div>
+            btns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    btns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    const type = btn.dataset.type;
+                    if (type === "pct") {
+                        detailPct.classList.remove("collapsed");
+                        detailFija.classList.add("collapsed");
+                    } else {
+                        detailPct.classList.add("collapsed");
+                        detailFija.classList.remove("collapsed");
+                    }
+                    onSwitch(type);
+                    calcular();
+                });
+            });
+        }
 
-<script>
-let modo = "compra";
+        setupFeeToggle("toggleFeeCompra", "detailCompraPct", "detailCompraFija", (t) => { feeCompraType = t; });
+        setupFeeToggle("toggleFeeVenta", "detailVentaPct", "detailVentaFija", (t) => { feeVentaType = t; });
 
-const compra = document.getElementById("compra");
-const ventaMercado = document.getElementById("ventaMercado");
-const ventaReal = document.getElementById("ventaReal");
-const comision = document.getElementById("comision");
-const ganancia = document.getElementById("ganancia");
-const resultado = document.getElementById("resultado");
-const toggleTheme = document.getElementById("toggleTheme");
+        // ── Listeners ──
+        document.querySelectorAll("input").forEach(input => {
+            input.addEventListener("input", calcular);
+        });
 
-const fieldCompra = document.getElementById("fieldCompra");
-const fieldVentaMercado = document.getElementById("fieldVentaMercado");
-const fieldVentaReal = document.getElementById("fieldVentaReal");
-const fieldGanancia = document.getElementById("fieldGanancia");
+        // ── Cálculo principal ──
+        function calcular() {
+            const c = parseFloat(compra.value) || 0;
+            const vMercado = parseFloat(ventaMercado.value) || 0;
+            const vReal = parseFloat(ventaReal.value) || 0;
+            const g = parseFloat(ganancia.value) || 0;
+            const cap = parseFloat(document.getElementById("capital").value) || 1000;
 
-document.querySelectorAll("input").forEach(input=>{
-    input.addEventListener("input", calcular);
-});
+            const comPctCompra = parseFloat(comisionCompraPct.value) || 0;
+            const comFijaCompra = parseFloat(comisionCompraFija.value) || 0;
+            const comPctVenta = parseFloat(comisionVentaPct.value) || 0;
+            const comFijaVenta = parseFloat(comisionVentaFija.value) || 0;
 
-function calcular(){
-    const c = parseFloat(compra.value);
-    const vMercado = parseFloat(ventaMercado.value);
-    const vReal = parseFloat(ventaReal.value);
-    const com = parseFloat(comision.value) || 0;
-    const g = parseFloat(ganancia.value) || 0;
-    const factor = 1 - (com/100);
-    let html = "";
+            const isCompraFija = feeCompraType === "fija";
+            const isVentaFija = feeVentaType === "fija";
 
-    if(modo==="compra" && c){
-        const equilibrio = c/factor;
-        const sugerido = (c*(1+g/100))/factor;
-        html = `
-        <div class="result-row"><span>Break Even</span><span>$${equilibrio.toFixed(2)}</span></div>
-        <div class="result-row"><span>Precio sugerido</span><span>$${sugerido.toFixed(2)}</span></div>
+            let html = "";
+
+            // Costo efectivo de compra (lo que realmente pagás por USDT)
+            function getEffectiveCompra(price) {
+                if (!price || cap <= 0) return 0;
+                if (isCompraFija) {
+                    return price * (1 + comFijaCompra / cap);
+                } else {
+                    return price / (1 - comPctCompra / 100);
+                }
+            }
+
+            // Ingreso efectivo de venta (lo que realmente recibís por USDT)
+            function getEffectiveVenta(price) {
+                if (!price || cap <= 0) return 0;
+                if (isVentaFija) {
+                    return price * (1 - comFijaVenta / cap);
+                } else {
+                    return price * (1 - comPctVenta / 100);
+                }
+            }
+
+            // Precio de venta necesario para un v_eff dado
+            function getVentaFromEffective(v_eff) {
+                if (!v_eff || cap <= 0) return 0;
+                if (isVentaFija) {
+                    return v_eff / (1 - comFijaVenta / cap);
+                } else {
+                    return v_eff / (1 - comPctVenta / 100);
+                }
+            }
+
+            // Precio de compra necesario para un c_eff dado
+            function getCompraFromEffective(c_eff) {
+                if (!c_eff || cap <= 0) return 0;
+                if (isCompraFija) {
+                    return c_eff / (1 + comFijaCompra / cap);
+                } else {
+                    return c_eff * (1 - comPctCompra / 100);
+                }
+            }
+
+            // Etiquetas de comisión
+            const labelC = isCompraFija ? `${comFijaCompra} ₮` : `${comPctCompra}%`;
+            const labelV = isVentaFija ? `${comFijaVenta} ₮` : `${comPctVenta}%`;
+
+            // Costo en ARS de la comisión
+            function comisionCompraARS(price) {
+                if (!price || cap <= 0) return 0;
+                if (isCompraFija) return comFijaCompra * price;
+                return (comPctCompra / 100) * price * cap;
+            }
+
+            function comisionVentaARS(price) {
+                if (!price || cap <= 0) return 0;
+                if (isVentaFija) return comFijaVenta * price;
+                return (comPctVenta / 100) * price * cap;
+            }
+
+            // =========================
+            // MODO COMPRA
+            // =========================
+            if (modo === "compra" && c) {
+                const c_eff = getEffectiveCompra(c);
+                const equilibrio = getVentaFromEffective(c_eff);
+                const sugerido = getVentaFromEffective(c_eff * (1 + g / 100));
+
+                const costoComC = comisionCompraARS(c);
+                const costoComV = comisionVentaARS(sugerido);
+
+                html = `
+        <div class="result-section-label">Comisiones</div>
+        <div class="result-row"><span>Compra: <span class="detail">${labelC}</span></span><span class="red">−$${costoComC.toFixed(2)}</span></div>
+        <div class="result-row"><span>Venta: <span class="detail">${labelV}</span></span><span class="red">−$${costoComV.toFixed(2)}</span></div>
+        <hr class="result-divider">
+        <div class="result-section-label">Resultados</div>
+        <div class="result-row"><span>Break Even (Venta)</span><span>$${equilibrio.toFixed(2)}</span></div>
+        <div class="result-row"><span>Precio sugerido (Venta)</span><span class="green">$${sugerido.toFixed(2)}</span></div>
         `;
-    }
+            }
 
-    if(modo==="venta" && vMercado){
-        const compraMax = (vMercado*factor)/(1+g/100);
-        html = `
-        <div class="result-row"><span>Compra máxima</span><span>$${compraMax.toFixed(2)}</span></div>
+            // =========================
+            // MODO VENTA MERCADO
+            // =========================
+            if (modo === "venta" && vMercado) {
+                const v_eff = getEffectiveVenta(vMercado);
+                const c_eff_max = v_eff / (1 + g / 100);
+                const compraMax = getCompraFromEffective(c_eff_max);
+
+                const costoComC = comisionCompraARS(compraMax);
+                const costoComV = comisionVentaARS(vMercado);
+
+                html = `
+        <div class="result-section-label">Comisiones</div>
+        <div class="result-row"><span>Compra: <span class="detail">${labelC}</span></span><span class="red">−$${costoComC.toFixed(2)}</span></div>
+        <div class="result-row"><span>Venta: <span class="detail">${labelV}</span></span><span class="red">−$${costoComV.toFixed(2)}</span></div>
+        <hr class="result-divider">
+        <div class="result-section-label">Resultados</div>
+        <div class="result-row"><span>Compra máxima</span><span class="red">$${compraMax.toFixed(2)}</span></div>
         `;
-    }
+            }
 
-    if(modo==="real" && c && vReal){
-        const ventaNeta = vReal*factor;
-        const margenReal = ((ventaNeta - c)/c)*100;
-        const clase = margenReal>=0 ? "green" : "red";
-        html = `
+            // =========================
+            // MODO REAL
+            // =========================
+            if (modo === "real" && c && vReal) {
+                const c_eff = getEffectiveCompra(c);
+                const v_eff = getEffectiveVenta(vReal);
+
+                const margenReal = ((v_eff - c_eff) / c_eff) * 100;
+                const clase = margenReal >= 0 ? "green" : "red";
+
+                const costoComC = comisionCompraARS(c);
+                const costoComV = comisionVentaARS(vReal);
+                const gananciaARS = (v_eff - c_eff) * cap;
+
+                html = `
+        <div class="result-section-label">Comisiones</div>
+        <div class="result-row"><span>Compra: <span class="detail">${labelC}</span></span><span class="red">−$${costoComC.toFixed(2)}</span></div>
+        <div class="result-row"><span>Venta: <span class="detail">${labelV}</span></span><span class="red">−$${costoComV.toFixed(2)}</span></div>
+        <hr class="result-divider">
+        <div class="result-section-label">Resultados</div>
         <div class="result-row"><span>Margen real</span><span class="${clase}">${margenReal.toFixed(3)}%</span></div>
-        <div class="result-row"><span>Ganancia x 100k</span><span>$${(100000*margenReal/100).toFixed(2)}</span></div>
-        <div class="result-row"><span>Ganancia x 1M</span><span>$${(1000000*margenReal/100).toFixed(2)}</span></div>
+        <div class="result-row"><span>Ganancia (${cap} USDT)</span><span class="${clase}">$${gananciaARS.toFixed(2)}</span></div>
+        <div class="result-row"><span>Ganancia x 100k</span><span class="${clase}">$${(100000 * margenReal / 100).toFixed(2)}</span></div>
+        <div class="result-row"><span>Ganancia x 1M</span><span class="${clase}">$${(1000000 * margenReal / 100).toFixed(2)}</span></div>
         `;
-    }
+            }
 
-    resultado.innerHTML = html;
-}
+            resultado.innerHTML = html;
+        }
 
-function setModo(nuevo){
-    modo = nuevo;
+        // ── Cambio de modo ──
+        function setModo(nuevo) {
+            modo = nuevo;
+            document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
 
-    document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+            if (nuevo === "compra") document.getElementById("modeCompra").classList.add("active");
+            if (nuevo === "venta") document.getElementById("modeVentaMercado").classList.add("active");
+            if (nuevo === "real") document.getElementById("modeReal").classList.add("active");
 
-    if(nuevo==="compra") document.getElementById("modeCompra").classList.add("active");
-    if(nuevo==="venta") document.getElementById("modeVentaMercado").classList.add("active");
-    if(nuevo==="real") document.getElementById("modeReal").classList.add("active");
+            fieldCompra.classList.toggle("hidden", modo === "venta");
+            fieldVentaMercado.classList.toggle("hidden", modo !== "venta");
+            fieldVentaReal.classList.toggle("hidden", modo !== "real");
+            fieldGanancia.classList.toggle("hidden", modo === "real");
 
-    fieldCompra.classList.toggle("hidden", modo==="venta");
-    fieldVentaMercado.classList.toggle("hidden", modo!=="venta");
-    fieldVentaReal.classList.toggle("hidden", modo!=="real");
-    fieldGanancia.classList.toggle("hidden", modo==="real");
+            calcular();
+        }
 
-    calcular();
-}
+        document.getElementById("modeCompra").onclick = () => setModo("compra");
+        document.getElementById("modeVentaMercado").onclick = () => setModo("venta");
+        document.getElementById("modeReal").onclick = () => setModo("real");
 
-document.getElementById("modeCompra").onclick=()=>setModo("compra");
-document.getElementById("modeVentaMercado").onclick=()=>setModo("venta");
-document.getElementById("modeReal").onclick=()=>setModo("real");
+        // ── Tema ──
+        toggleTheme.onclick = () => {
+            document.body.classList.toggle("light");
+            const isLight = document.body.classList.contains("light");
+            toggleTheme.innerText = isLight ? "☀️" : "🌙";
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+        };
 
-toggleTheme.onclick = ()=>{
-    document.body.classList.toggle("light");
-    const isLight = document.body.classList.contains("light");
-    toggleTheme.innerText = isLight ? "☀️" : "🌙";
-    localStorage.setItem("theme", isLight ? "light" : "dark");
-};
+        if (localStorage.getItem("theme") === "light") {
+            document.body.classList.add("light");
+            toggleTheme.innerText = "☀️";
+        }
 
-if(localStorage.getItem("theme")==="light"){
-    document.body.classList.add("light");
-    toggleTheme.innerText="☀️";
-}
+        calcular();
+    </script>
 
-calcular();
-</script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker registrado"));
-}
-</script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(() => console.log("Service Worker registrado"));
+        }
+    </script>
 
 </body>
+
 </html>
