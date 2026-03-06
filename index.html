@@ -10,7 +10,8 @@
     <meta name="theme-color" content="#000000">
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="dark light">
     <title>Calculadora P2P</title>
 
     <style>
@@ -43,17 +44,20 @@
             font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
         }
 
-        body {
+        html, body {
             margin: 0;
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            min-height: 100vh;
-            min-height: 100dvh;
             padding: 10px 0;
-            transition: 0.25s ease;
+            transition: background-color 0.25s ease, color 0.25s ease;
             overflow-x: hidden;
         }
 
@@ -816,16 +820,29 @@
         document.getElementById("modeReal").onclick = () => setModo("real");
 
         // ── Tema ──
+        function applyTheme(isLight) {
+            if (isLight) {
+                document.body.classList.add("light");
+                document.documentElement.style.colorScheme = 'light';
+                toggleTheme.innerText = "☀️";
+            } else {
+                document.body.classList.remove("light");
+                document.documentElement.style.colorScheme = 'dark';
+                toggleTheme.innerText = "🌙";
+            }
+        }
+
         toggleTheme.onclick = () => {
-            document.body.classList.toggle("light");
-            const isLight = document.body.classList.contains("light");
-            toggleTheme.innerText = isLight ? "☀️" : "🌙";
+            const isLight = !document.body.classList.contains("light");
+            applyTheme(isLight);
             localStorage.setItem("theme", isLight ? "light" : "dark");
         };
 
         if (localStorage.getItem("theme") === "light") {
-            document.body.classList.add("light");
-            toggleTheme.innerText = "☀️";
+            applyTheme(true);
+        } else {
+            // Force dark by default in DOM
+            document.documentElement.style.colorScheme = 'dark';
         }
 
         calcular();
