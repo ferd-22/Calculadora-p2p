@@ -133,6 +133,7 @@
             position: relative;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
             transition: 0.25s ease;
+            width: 100%;
         }
 
         /* THEME */
@@ -210,7 +211,7 @@
             color: var(--subtext);
         }
 
-        input[type="number"] {
+        .custom-keyboard-input {
             width: 100%;
             height: 44px;
             padding: 0 14px 0 40px;
@@ -220,6 +221,9 @@
             color: var(--text);
             font-size: 16px;
             transition: 0.2s ease;
+            cursor: pointer;
+            box-sizing: border-box;
+            font-family: inherit;
         }
 
         input[type="checkbox"] {
@@ -229,7 +233,7 @@
             cursor: pointer;
         }
 
-        input:focus {
+        .custom-keyboard-input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(240, 185, 11, 0.25);
@@ -310,7 +314,7 @@
             opacity: 1;
         }
 
-        .fee-detail .input-group input[type="number"] {
+        .fee-detail .input-group .custom-keyboard-input {
             height: 34px;
             font-size: 13px;
             padding-left: 32px;
@@ -418,7 +422,7 @@
                 font-size: 12px;
             }
 
-            input[type="number"] {
+            .custom-keyboard-input {
                 height: 38px;
                 font-size: 15px;
             }
@@ -432,7 +436,7 @@
                 margin-bottom: 6px;
             }
 
-            .fee-detail .input-group input[type="number"] {
+            .fee-detail .input-group .custom-keyboard-input {
                 height: 34px;
                 font-size: 14px;
             }
@@ -466,7 +470,7 @@
                 font-size: 20px;
             }
 
-            input[type="number"] {
+            .custom-keyboard-input {
                 font-size: 15px;
             }
 
@@ -503,7 +507,7 @@
                 <label>Precio de compra</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" id="compra" inputmode="decimal">
+                    <input type="number" step="any" inputmode="decimal" id="compra" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -511,7 +515,7 @@
                 <label>Precio venta mercado</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" id="ventaMercado" inputmode="decimal">
+                    <input type="number" step="any" inputmode="decimal" id="ventaMercado" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -519,7 +523,7 @@
                 <label>Precio de venta</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" id="ventaReal" inputmode="decimal">
+                    <input type="number" step="any" inputmode="decimal" id="ventaReal" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -527,7 +531,7 @@
                 <label>Capital (USDT)</label>
                 <div class="input-group">
                     <span class="prefix">₮</span>
-                    <input type="number" id="capital" value="1000" inputmode="decimal">
+                    <input type="number" step="any" inputmode="decimal" id="capital" class="custom-keyboard-input" value="1000">
                 </div>
             </div>
 
@@ -545,14 +549,13 @@
                         <div class="fee-detail" id="detailCompraPct">
                             <div class="input-group">
                                 <span class="prefix">%</span>
-                                <input type="number" id="comisionCompraPct" value="0.2" inputmode="decimal">
+                                <input type="number" step="any" inputmode="decimal" id="comisionCompraPct" class="custom-keyboard-input" value="0.2">
                             </div>
                         </div>
                         <div class="fee-detail collapsed" id="detailCompraFija">
                             <div class="input-group">
                                 <span class="prefix">₮</span>
-                                <input type="number" id="comisionCompraFija" value="0.07" inputmode="decimal"
-                                    step="0.01">
+                                <input type="number" step="any" inputmode="decimal" id="comisionCompraFija" class="custom-keyboard-input" value="0.07">
                             </div>
                         </div>
                     </div>
@@ -566,14 +569,13 @@
                         <div class="fee-detail" id="detailVentaPct">
                             <div class="input-group">
                                 <span class="prefix">%</span>
-                                <input type="number" id="comisionVentaPct" value="0.2" inputmode="decimal">
+                                <input type="number" step="any" inputmode="decimal" id="comisionVentaPct" class="custom-keyboard-input" value="0.2">
                             </div>
                         </div>
                         <div class="fee-detail collapsed" id="detailVentaFija">
                             <div class="input-group">
                                 <span class="prefix">₮</span>
-                                <input type="number" id="comisionVentaFija" value="0.07" inputmode="decimal"
-                                    step="0.01">
+                                <input type="number" step="any" inputmode="decimal" id="comisionVentaFija" class="custom-keyboard-input" value="0.07">
                             </div>
                         </div>
                     </div>
@@ -584,12 +586,11 @@
                 <label>Ganancia deseada (%)</label>
                 <div class="input-group">
                     <span class="prefix">%</span>
-                    <input type="number" id="ganancia" inputmode="decimal">
+                    <input type="number" step="any" inputmode="decimal" id="ganancia" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
             <div class="result-card" id="resultado"></div>
-
         </div>
     </div>
 
@@ -646,7 +647,7 @@
         setupFeeToggle("toggleFeeVenta", "detailVentaPct", "detailVentaFija", (t) => { feeVentaType = t; });
 
         // ── Listeners ──
-        document.querySelectorAll("input").forEach(input => {
+        document.querySelectorAll(".custom-keyboard-input").forEach(input => {
             input.addEventListener("input", calcular);
         });
 
@@ -821,13 +822,20 @@
 
         // ── Tema ──
         function applyTheme(isLight) {
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+            const inputs = document.querySelectorAll('input');
+
             if (isLight) {
                 document.body.classList.add("light");
                 document.documentElement.style.colorScheme = 'light';
+                metaThemeColor.setAttribute('content', '#f4f6f9');
+                inputs.forEach(input => input.style.colorScheme = 'light');
                 toggleTheme.innerText = "☀️";
             } else {
                 document.body.classList.remove("light");
                 document.documentElement.style.colorScheme = 'dark';
+                metaThemeColor.setAttribute('content', '#0B0E11');
+                inputs.forEach(input => input.style.colorScheme = 'dark');
                 toggleTheme.innerText = "🌙";
             }
         }
@@ -844,6 +852,11 @@
             // Force dark by default in DOM
             document.documentElement.style.colorScheme = 'dark';
         }
+
+        // ── Listeners ──
+        document.querySelectorAll(".custom-keyboard-input").forEach(input => {
+            input.addEventListener("input", calcular);
+        });
 
         calcular();
 
