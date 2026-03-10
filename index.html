@@ -346,8 +346,15 @@
 
         .result-row:last-child {
             margin-bottom: 0;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); /* Sutil separador para el total */
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .light .result-row:last-child {
+            border-top-color: rgba(0, 0, 0, 0.05);
         }
 
         .result-divider {
@@ -811,9 +818,9 @@
         <div class="result-section-label">Resultados</div>
         <div class="result-row"><span>Margen real</span><span class="${clase}">${margenReal.toFixed(3)}%</span></div>
         <div class="result-row"><span>Ganancia (${cap} USDT)</span><span class="${clase}">$${gananciaARS.toFixed(2)}</span></div>
-        <div class="result-row"><span>Capital Final</span><span class="${clase}">${capFinal.toFixed(2)} ₮</span></div>
         <div class="result-row"><span>Ganancia x 100k</span><span class="${clase}">$${(100000 * margenReal / 100).toFixed(2)}</span></div>
         <div class="result-row"><span>Ganancia x 1M</span><span class="${clase}">$${(1000000 * margenReal / 100).toFixed(2)}</span></div>
+        <div class="result-row"><span>Capital Final</span><span class="${clase}">${capFinal.toFixed(2)} ₮</span></div>
         `;
             }
 
