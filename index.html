@@ -507,7 +507,7 @@
                 <label>Precio de compra</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" step="any" inputmode="decimal" id="compra" class="custom-keyboard-input" value="">
+                    <input type="text" inputmode="decimal" id="compra" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -515,7 +515,7 @@
                 <label>Precio venta mercado</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" step="any" inputmode="decimal" id="ventaMercado" class="custom-keyboard-input" value="">
+                    <input type="text" inputmode="decimal" id="ventaMercado" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -523,7 +523,7 @@
                 <label>Precio de venta</label>
                 <div class="input-group">
                     <span class="prefix">$</span>
-                    <input type="number" step="any" inputmode="decimal" id="ventaReal" class="custom-keyboard-input" value="">
+                    <input type="text" inputmode="decimal" id="ventaReal" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -531,7 +531,7 @@
                 <label>Capital (USDT)</label>
                 <div class="input-group">
                     <span class="prefix">₮</span>
-                    <input type="number" step="any" inputmode="decimal" id="capital" class="custom-keyboard-input" value="1000">
+                    <input type="text" inputmode="decimal" id="capital" class="custom-keyboard-input" value="1000">
                 </div>
             </div>
 
@@ -549,13 +549,13 @@
                         <div class="fee-detail" id="detailCompraPct">
                             <div class="input-group">
                                 <span class="prefix">%</span>
-                                <input type="number" step="any" inputmode="decimal" id="comisionCompraPct" class="custom-keyboard-input" value="0.2">
+                                <input type="text" inputmode="decimal" id="comisionCompraPct" class="custom-keyboard-input" value="0.2">
                             </div>
                         </div>
                         <div class="fee-detail collapsed" id="detailCompraFija">
                             <div class="input-group">
                                 <span class="prefix">₮</span>
-                                <input type="number" step="any" inputmode="decimal" id="comisionCompraFija" class="custom-keyboard-input" value="0.07">
+                                <input type="text" inputmode="decimal" id="comisionCompraFija" class="custom-keyboard-input" value="0.07">
                             </div>
                         </div>
                     </div>
@@ -569,13 +569,13 @@
                         <div class="fee-detail" id="detailVentaPct">
                             <div class="input-group">
                                 <span class="prefix">%</span>
-                                <input type="number" step="any" inputmode="decimal" id="comisionVentaPct" class="custom-keyboard-input" value="0.2">
+                                <input type="text" inputmode="decimal" id="comisionVentaPct" class="custom-keyboard-input" value="0.2">
                             </div>
                         </div>
                         <div class="fee-detail collapsed" id="detailVentaFija">
                             <div class="input-group">
                                 <span class="prefix">₮</span>
-                                <input type="number" step="any" inputmode="decimal" id="comisionVentaFija" class="custom-keyboard-input" value="0.07">
+                                <input type="text" inputmode="decimal" id="comisionVentaFija" class="custom-keyboard-input" value="0.07">
                             </div>
                         </div>
                     </div>
@@ -586,7 +586,7 @@
                 <label>Ganancia deseada (%)</label>
                 <div class="input-group">
                     <span class="prefix">%</span>
-                    <input type="number" step="any" inputmode="decimal" id="ganancia" class="custom-keyboard-input" value="">
+                    <input type="text" inputmode="decimal" id="ganancia" class="custom-keyboard-input" value="">
                 </div>
             </div>
 
@@ -648,7 +648,21 @@
 
         // ── Listeners ──
         document.querySelectorAll(".custom-keyboard-input").forEach(input => {
-            input.addEventListener("input", calcular);
+            input.addEventListener("input", (e) => {
+                // Reemplazar coma por punto para compatibilidad y parseFloat
+                let value = e.target.value.replace(/,/g, '.');
+                // Permitir solo números y un punto decimal
+                value = value.replace(/[^0-9.]/g, '');
+                const parts = value.split('.');
+                if (parts.length > 2) {
+                    value = parts[0] + '.' + parts.slice(1).join('');
+                }
+                
+                if (e.target.value !== value) {
+                    e.target.value = value;
+                }
+                calcular();
+            });
         });
 
         // ── Cálculo principal ──
@@ -736,6 +750,7 @@
 
                 const costoComC = comisionCompraARS(c);
                 const costoComV = comisionVentaARS(sugerido);
+                const capFinal = cap * (1 + g / 100);
 
                 html = `
         <div class="result-section-label">Comisiones</div>
@@ -745,6 +760,7 @@
         <div class="result-section-label">Resultados</div>
         <div class="result-row"><span>Break Even (Venta)</span><span>$${equilibrio.toFixed(2)}</span></div>
         <div class="result-row"><span>Precio sugerido (Venta)</span><span class="green">$${sugerido.toFixed(2)}</span></div>
+        <div class="result-row"><span>Capital Final</span><span class="green">${capFinal.toFixed(2)} ₮</span></div>
         `;
             }
 
@@ -758,6 +774,7 @@
 
                 const costoComC = comisionCompraARS(compraMax);
                 const costoComV = comisionVentaARS(vMercado);
+                const capFinal = cap * (1 + g / 100);
 
                 html = `
         <div class="result-section-label">Comisiones</div>
@@ -766,6 +783,7 @@
         <hr class="result-divider">
         <div class="result-section-label">Resultados</div>
         <div class="result-row"><span>Compra máxima</span><span class="red">$${compraMax.toFixed(2)}</span></div>
+        <div class="result-row"><span>Capital Final</span><span class="green">${capFinal.toFixed(2)} ₮</span></div>
         `;
             }
 
@@ -783,6 +801,8 @@
                 const costoComV = comisionVentaARS(vReal);
                 const gananciaARS = (v_eff - c_eff) * cap;
 
+                const capFinal = cap * (v_eff / c_eff);
+
                 html = `
         <div class="result-section-label">Comisiones</div>
         <div class="result-row"><span>Compra: <span class="detail">${labelC}</span></span><span class="red">−$${costoComC.toFixed(2)}</span></div>
@@ -791,6 +811,7 @@
         <div class="result-section-label">Resultados</div>
         <div class="result-row"><span>Margen real</span><span class="${clase}">${margenReal.toFixed(3)}%</span></div>
         <div class="result-row"><span>Ganancia (${cap} USDT)</span><span class="${clase}">$${gananciaARS.toFixed(2)}</span></div>
+        <div class="result-row"><span>Capital Final</span><span class="${clase}">${capFinal.toFixed(2)} ₮</span></div>
         <div class="result-row"><span>Ganancia x 100k</span><span class="${clase}">$${(100000 * margenReal / 100).toFixed(2)}</span></div>
         <div class="result-row"><span>Ganancia x 1M</span><span class="${clase}">$${(1000000 * margenReal / 100).toFixed(2)}</span></div>
         `;
@@ -853,10 +874,7 @@
             document.documentElement.style.colorScheme = 'dark';
         }
 
-        // ── Listeners ──
-        document.querySelectorAll(".custom-keyboard-input").forEach(input => {
-            input.addEventListener("input", calcular);
-        });
+
 
         calcular();
 
